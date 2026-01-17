@@ -1,9 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 function IndexPopup() {
   const [prompt, setPrompt] = useState("")
   const [status, setStatus] = useState("")
   const [aggressiveness, setAggressiveness] = useState(50)
+
+  // Load aggressiveness from storage on mount
+  useEffect(() => {
+    chrome.storage.local.get(['aggressiveness'], (result) => {
+      if (result.aggressiveness !== undefined) {
+        setAggressiveness(result.aggressiveness)
+        console.log("Loaded aggressiveness from storage:", result.aggressiveness + "%")
+      }
+    })
+  }, [])
 
   const handleSubmit = async () => {
     if (!prompt.trim()) {
@@ -12,6 +22,11 @@ function IndexPopup() {
     }
 
     console.log("Aggressiveness value:", aggressiveness + "%")
+
+    // Save aggressiveness to storage
+    chrome.storage.local.set({ aggressiveness }, () => {
+      console.log("Aggressiveness saved to storage:", aggressiveness + "%")
+    })
 
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -48,12 +63,11 @@ function IndexPopup() {
         fontFamily: "system-ui, -apple-system, sans-serif",
         backgroundColor: "#fff"
       }}>
-      {/* Logo instead of text title */}
+      {/* Logo */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginBottom: '16px' }}>
         <span style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>Tiny</span>
         <span style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>T</span>
 
-        {/* Token "o" */}
         <div style={{
           position: 'relative',
           display: 'inline-flex',
@@ -63,7 +77,6 @@ function IndexPopup() {
           marginRight: '2px',
           marginBottom: '-2px'
         }}>
-          {/* Outer ring (gold token) */}
           <div style={{
             width: '30px',
             height: '30px',
@@ -74,7 +87,6 @@ function IndexPopup() {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            {/* Inner ring */}
             <div style={{
               width: '24px',
               height: '24px',
@@ -85,7 +97,6 @@ function IndexPopup() {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              {/* Center circle */}
               <div style={{
                 width: '16px',
                 height: '16px',
@@ -106,7 +117,6 @@ function IndexPopup() {
             </div>
           </div>
 
-          {/* Shine effect */}
           <div style={{
             position: 'absolute',
             top: '4px',
@@ -123,9 +133,7 @@ function IndexPopup() {
         <span style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>ken</span>
       </div>
 
-      {/* Main content area with slider on the right */}
       <div style={{ display: 'flex', gap: '16px', alignItems: 'stretch' }}>
-        {/* Textarea and button */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <textarea
             value={prompt}
@@ -169,7 +177,6 @@ function IndexPopup() {
           </button>
         </div>
 
-        {/* Vertical Slider on the right */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',

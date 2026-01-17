@@ -18,6 +18,14 @@ const AutoPopup = () => {
     useEffect(() => {
         console.log("AutoPopup loaded on:", window.location.href)
 
+        // Load aggressiveness from storage
+        chrome.storage.local.get(['aggressiveness'], (result) => {
+            if (result.aggressiveness !== undefined) {
+                setAggressiveness(result.aggressiveness)
+                console.log("Loaded aggressiveness from storage:", result.aggressiveness + "%")
+            }
+        })
+
         // Listen for messages from the popup
         const messageListener = (message: any, sender: any, sendResponse: any) => {
             console.log("Received message:", message)
@@ -46,6 +54,11 @@ const AutoPopup = () => {
     const handleSubmit = () => {
         if (!prompt.trim()) return
         console.log("Aggressiveness value:", aggressiveness + "%")
+
+        // Save aggressiveness to storage
+        chrome.storage.local.set({ aggressiveness }, () => {
+            console.log("Aggressiveness saved to storage:", aggressiveness + "%")
+        })
         insertPrompt(prompt, aggressiveness)
         setIsVisible(false)
     }
@@ -104,12 +117,10 @@ const AutoPopup = () => {
                     ×
                 </button>
 
-                {/* Logo instead of text title */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginBottom: '16px' }}>
                     <span style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b' }}>Tiny</span>
                     <span style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b' }}>T</span>
 
-                    {/* Token "o" */}
                     <div style={{
                         position: 'relative',
                         display: 'inline-flex',
@@ -119,7 +130,6 @@ const AutoPopup = () => {
                         marginRight: '1px',
                         marginBottom: '-2px'
                     }}>
-                        {/* Outer ring (gold token) */}
                         <div style={{
                             width: '26px',
                             height: '26px',
@@ -130,7 +140,6 @@ const AutoPopup = () => {
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
-                            {/* Inner ring */}
                             <div style={{
                                 width: '20px',
                                 height: '20px',
@@ -141,7 +150,6 @@ const AutoPopup = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                                {/* Center circle */}
                                 <div style={{
                                     width: '13px',
                                     height: '13px',
@@ -162,7 +170,6 @@ const AutoPopup = () => {
                             </div>
                         </div>
 
-                        {/* Shine effect */}
                         <div style={{
                             position: 'absolute',
                             top: '3px',
@@ -179,9 +186,7 @@ const AutoPopup = () => {
                     <span style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b' }}>ken</span>
                 </div>
 
-                {/* Main content area with slider on the right */}
                 <div style={{ display: 'flex', gap: '16px', alignItems: 'stretch' }}>
-                    {/* Textarea and buttons */}
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                         <textarea
                             value={prompt}
@@ -236,7 +241,6 @@ const AutoPopup = () => {
                         </div>
                     </div>
 
-                    {/* Vertical Slider on the right */}
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
