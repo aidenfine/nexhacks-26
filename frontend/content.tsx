@@ -204,7 +204,7 @@ const AutoPopup = () => {
                     ×
                 </button>
 
-                <h2 style={{ margin: "0 0 8px 0", color: "#333" }}>Quick Prompt</h2>
+                <h2 style={{ margin: "0 0 8px 0", color: "#333" }}>TinyToken</h2>
                 <p style={{ margin: "0 0 16px 0", color: "#666", fontSize: "14px" }}>
                     Enter your prompt and we'll send it to the chat
                 </p>
