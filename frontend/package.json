@@ -1,8 +1,8 @@
 {
-  "name": "frontend",
-  "displayName": "Frontend",
+  "name": "tinytoken",
+  "displayName": "TinyToken",
   "version": "0.0.1",
-  "description": "frontend for thetokencompany",
+  "description": "Quick prompt helper for ChatGPT and Claude",
   "author": "aiden03fine@gmail.com",
   "scripts": {
     "dev": "plasmo dev",
