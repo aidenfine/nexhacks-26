@@ -22,7 +22,7 @@ const AutoPopup = () => {
         const messageListener = (message: any, sender: any, sendResponse: any) => {
             console.log("Received message:", message)
             if (message.type === "INSERT_PROMPT") {
-                insertPrompt(message.prompt)
+                insertPrompt(message.prompt, aggressiveness)
                 sendResponse({ success: true })
             }
             return true
@@ -46,7 +46,7 @@ const AutoPopup = () => {
     const handleSubmit = () => {
         if (!prompt.trim()) return
         console.log("Aggressiveness value:", aggressiveness + "%")
-        insertPrompt(prompt)
+        insertPrompt(prompt, aggressiveness)
         setIsVisible(false)
     }
 
