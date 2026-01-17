@@ -5,7 +5,7 @@ description = "TinyToken Backend"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "fastapi[standard]>=0.128.0",
+    "fastapi[all,standard]>=0.128.0",
     "python-dotenv>=1.2.1",
     "tokenc>=0.1.2",
 ]
