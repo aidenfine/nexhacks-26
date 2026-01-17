@@ -1,5 +1,6 @@
 export async function fetchApi(apiUrl: string, text: string, aggressiveness?: number) {
-    const url = `http://localhost:8000${apiUrl}?aggressiveness=${aggressiveness ? aggressiveness : .9}`;
+    console.log(aggressiveness, "aggro number")
+    const url = `http://localhost:8000${apiUrl}?aggressiveness=${aggressiveness ? aggressiveness / 100 : .9}`;
 
     try {
         const response = await fetch(url, {

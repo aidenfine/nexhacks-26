@@ -1,10 +1,10 @@
 import { fetchApi } from "./api";
 
 
-export const insertPrompt = async (promptText: string) => {
+export const insertPrompt = async (promptText: string, aggressiveness: number) => {
     console.log("Attempting to insert prompt:", promptText);
 
-    const compressedPromptResponse = await fetchApi('/api/compress', promptText)
+    const compressedPromptResponse = await fetchApi('/api/compress', promptText, aggressiveness)
 
     const compressedText = compressedPromptResponse.response.output
 

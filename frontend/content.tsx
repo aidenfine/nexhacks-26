@@ -30,7 +30,7 @@ const AutoPopup = () => {
         const messageListener = (message: any, sender: any, sendResponse: any) => {
             console.log("Received message:", message)
             if (message.type === "INSERT_PROMPT") {
-                insertPrompt(message.prompt)
+                insertPrompt(message.prompt, aggressiveness)
                 sendResponse({ success: true })
             }
             return true
@@ -59,8 +59,7 @@ const AutoPopup = () => {
         chrome.storage.local.set({ aggressiveness }, () => {
             console.log("Aggressiveness saved to storage:", aggressiveness + "%")
         })
-
-        insertPrompt(prompt)
+        insertPrompt(prompt, aggressiveness)
         setIsVisible(false)
     }
 
