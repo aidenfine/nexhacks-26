@@ -27,10 +27,13 @@ const AutoPopup = () => {
         })
 
         // Listen for messages from the popup
-        const messageListener = (message: any, sender: any, sendResponse: any) => {
+        const messageListener = async (message: any, sender: any, sendResponse: any) => {
             console.log("Received message:", message)
             if (message.type === "INSERT_PROMPT") {
-                insertPrompt(message.prompt, aggressiveness)
+                console.log(message, "message ")
+                const tokenSaved = await insertPrompt(message.prompt, message.aggressiveness)
+
+                saveTokenSavedToStorage(typeof (tokenSaved) == "number" ? tokenSaved : 0)
                 sendResponse({ success: true })
             }
             return true
@@ -50,8 +53,20 @@ const AutoPopup = () => {
             }
         }
     }, [])
+    const saveTokenSavedToStorage = (tokens: number) => {
+        chrome.storage.local.get(['tokensSaved'], (result) => {
+            if (result.tokensSaved !== undefined) {
+                console.log("adding num of tokens saved ", tokens)
 
-    const handleSubmit = () => {
+                const numOfTokens = result.tokensSaved += tokens
+                chrome.storage.local.set({ 'tokensSaved': numOfTokens })
+                console.log("new res", numOfTokens)
+            }
+        })
+
+    }
+
+    const handleSubmit = async () => {
         if (!prompt.trim()) return
         console.log("Aggressiveness value:", aggressiveness + "%")
 
@@ -59,7 +74,8 @@ const AutoPopup = () => {
         chrome.storage.local.set({ aggressiveness }, () => {
             console.log("Aggressiveness saved to storage:", aggressiveness + "%")
         })
-        insertPrompt(prompt, aggressiveness)
+        const numOfTokensSaved = await insertPrompt(prompt, aggressiveness)
+        console.log(numOfTokensSaved, "num of tokens saved")
         setIsVisible(false)
     }
 

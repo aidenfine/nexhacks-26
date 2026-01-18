@@ -67,4 +67,5 @@ export const insertPrompt = async (promptText: string, aggressiveness: number) =
         if (sendButton) sendButton.click();
         else console.log("Send button not found or disabled");
     }, 100);
+    return compressedPromptResponse.response.original_input_tokens - compressedPromptResponse.response.output_tokens
 };

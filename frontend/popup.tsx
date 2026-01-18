@@ -4,6 +4,7 @@ function IndexPopup() {
   const [prompt, setPrompt] = useState("")
   const [status, setStatus] = useState("")
   const [aggressiveness, setAggressiveness] = useState(50)
+  const [tokensSaved, setTokensSaved] = useState(0)
 
   // Load aggressiveness from storage on mount
   useEffect(() => {
@@ -11,6 +12,17 @@ function IndexPopup() {
       if (result.aggressiveness !== undefined) {
         setAggressiveness(result.aggressiveness)
         console.log("Loaded aggressiveness from storage:", result.aggressiveness + "%")
+      }
+    })
+
+    chrome.storage.local.get(['tokensSaved'], (result) => {
+      if (result.tokensSaved !== undefined) {
+        setTokensSaved(result.tokensSaved)
+        console.log(`number of tokens got from local storage ${tokensSaved}`)
+      } else {
+        chrome.storage.local.set({ 'tokensSaved': 0 }).then(() => {
+          console.log("Saved tokens")
+        })
       }
     })
   }, [])
@@ -32,7 +44,7 @@ function IndexPopup() {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       if (!tab.id) return setStatus("No active tab found");
 
-      await chrome.tabs.sendMessage(tab.id, { type: "INSERT_PROMPT", prompt });
+      await chrome.tabs.sendMessage(tab.id, { type: "INSERT_PROMPT", prompt, aggressiveness });
       setStatus("Prompt sent! ✓");
       setPrompt("");
       setTimeout(() => setStatus(""), 2000);
@@ -132,6 +144,15 @@ function IndexPopup() {
 
         <span style={{ fontSize: '24px', fontWeight: '700', color: '#1e293b' }}>ken</span>
       </div>
+
+      <p>Token's Saved:
+        <span style={{
+          color: 'green'
+        }}>
+          {tokensSaved}
+        </span>
+
+      </p>
 
       <div style={{ display: 'flex', gap: '16px', alignItems: 'stretch' }}>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
