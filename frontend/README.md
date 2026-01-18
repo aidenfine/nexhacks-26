@@ -1,33 +1,32 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
-## Getting Started
 
-First, run the development server:
+**Elevator pitch**
+Saving money and resources shouldn't take effort, TinyToken compresses online AI chats to save your API usage.
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+**About the project**
+## Inspiration
+During presentation we thought the product was innovative and we believed there was a better way to implement it. 
+## What it does
+User inputs a prompt and TinyToken use's TheTokenCompany API to handle compression of the input, then automatically sends a chat to web LLM's
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+## How we built it
+TypeScript chrome-based extension ( check if works on other browsers), Python backend
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+## Challenges we ran into
+- Auto filling and submitting chat's
+- State bugs when changing aggro 
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+## Accomplishments that we're proud of
+- Making it actually easy to use and work with.
+- First hackathon
 
-## Making production build
+## What we learned
+- How to make a chrome extension
+- How Token compression works 
 
-Run the following:
+## What's next for TinyToke
+- Sleep
 
-```bash
-pnpm build
-# or
-npm run build
-```
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+**Try out links**
+Link github
