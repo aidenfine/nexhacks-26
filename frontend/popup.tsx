@@ -195,7 +195,7 @@ function IndexPopup() {
           <input
             type="range"
             min="10"
-            max="90"
+            max="100"
             step="10"
             value={aggressiveness}
             onChange={handleSliderChange}
